@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { createUploadTarget, finishSubmission, type Mode } from "../actions";
 
@@ -17,6 +17,14 @@ export default function Recorder() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const previewRef = useRef<HTMLVideoElement>(null);
+  const submitDialogRef = useRef<HTMLDialogElement>(null);
+
+  // showModal() makes the rest of the page inert (no clicks or keyboard focus) while submitting.
+  useEffect(() => {
+    const dialog = submitDialogRef.current;
+    if (submitting && !dialog?.open) dialog?.showModal();
+    if (!submitting && dialog?.open) dialog.close();
+  }, [submitting]);
 
   async function start() {
     setError(null);
@@ -133,6 +141,15 @@ export default function Recorder() {
           )}
         </div>
       )}
+
+      {/* Escape would otherwise close the dialog and unblock the page mid-upload. */}
+      <dialog ref={submitDialogRef} className="submit-modal" aria-labelledby="submit-modal-title" onCancel={(e) => e.preventDefault()}>
+        <div className="spinner" aria-hidden="true" />
+        <p id="submit-modal-title" className="section-title">
+          Submitting your recording
+        </p>
+        <p className="muted small">Please keep this page open until it finishes.</p>
+      </dialog>
     </section>
   );
 }

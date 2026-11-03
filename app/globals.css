@@ -327,3 +327,54 @@ p {
   width: 100%;
   border-radius: 10px;
 }
+
+/* Submit modal */
+.submit-modal {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 40px;
+  max-width: min(360px, calc(100vw - 32px));
+  text-align: center;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.submit-modal[open] {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.submit-modal::backdrop {
+  background: rgb(31 35 40 / 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.submit-modal:focus {
+  outline: none;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  border: 4px solid var(--accent-soft);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slowed, not stopped: the motion is the only sign the upload is still running. */
+  .spinner {
+    animation-duration: 2s;
+  }
+}
