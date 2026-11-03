@@ -1,0 +1,329 @@
+:root {
+  --bg: #f6f3ee;
+  --surface: #ffffff;
+  --ink: #1f2328;
+  --muted: #5d6470;
+  --line: #e3ddd3;
+  --accent: #1f5c4a;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6efeb;
+  --danger: #b4232a;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgb(31 35 40 / 0.04), 0 8px 24px rgb(31 35 40 / 0.06);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.4rem);
+}
+
+p {
+  margin: 0;
+}
+
+/* Layout */
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 16px 64px;
+}
+
+.page-narrow {
+  max-width: 480px;
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+}
+
+.page-header {
+  display: grid;
+  gap: 8px;
+  max-width: 640px;
+  margin-bottom: 32px;
+}
+
+.record-layout {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .record-layout {
+    grid-template-columns: 1.3fr 1fr;
+    align-items: start;
+  }
+  /* Keeps the recorder in view while reading long prompts. */
+  .recorder {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  display: grid;
+  gap: 16px;
+}
+
+.stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* Text */
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.section-title {
+  font-size: 1.15rem;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 0.95rem;
+}
+
+/* Prompts */
+.prompts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.prompt {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  display: grid;
+  gap: 10px;
+}
+
+.prompt-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prompt-title {
+  font-size: 1.3rem;
+}
+
+.prompt-body {
+  color: #353b44;
+  max-width: 65ch;
+}
+
+/* Form controls */
+.field-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.input {
+  font: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fdfcfa;
+  color: var(--ink);
+}
+
+.input:focus-visible,
+.btn:focus-visible,
+.segment:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #174a3b;
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg);
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+.btn-stop {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-stop:hover {
+  background: #951c22;
+}
+
+/* Recorder */
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  gap: 4px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.segment {
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.segment[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgb(31 35 40 / 0.12);
+}
+
+.segment:disabled {
+  cursor: not-allowed;
+}
+
+.stage {
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  background: #22262b;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.stage-hint {
+  color: #c9ccd1;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Mirror the live preview like a selfie camera; the saved recording is not mirrored. */
+  transform: scaleX(-1);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+}
+
+.playback {
+  display: grid;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.player {
+  width: 100%;
+  border-radius: 10px;
+}

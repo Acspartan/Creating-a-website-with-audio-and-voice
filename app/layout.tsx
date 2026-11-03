@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Source_Serif_4 } from "next/font/google";
+import "./globals.css";
 
-export const metadata: Metadata = { title: "Recorder" };
+const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" });
+
+export const metadata: Metadata = { title: "MSU Reflections" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body style={{ fontFamily: "system-ui, sans-serif", maxWidth: 640, margin: "40px auto", padding: "0 16px" }}>
-        {children}
-      </body>
+    <html lang="en" className={serif.variable}>
+      <body>{children}</body>
     </html>
   );
 }

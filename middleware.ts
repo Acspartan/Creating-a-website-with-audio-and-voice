@@ -11,6 +11,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Everything except the verify page ("/" itself) and static assets.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).+)"],
+  // Everything except the verify page ("/" itself), the thank-you page, and static assets.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|thank-you$).+)"],
 };
