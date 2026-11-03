@@ -4,9 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { createUploadTarget, finishSubmission, type Mode } from "../actions";
 
-// The browser only ever uploads through one-time signed URLs issued by the server, so the public key needs no bucket access.
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-
 export default function Recorder() {
   const [mode, setMode] = useState<Mode>("audio");
   const [recording, setRecording] = useState(false);
@@ -65,6 +62,9 @@ export default function Recorder() {
 
       // Bucket MIME rules compare the base type, so drop any ";codecs=..." suffix.
       const contentType = clip.blob.type.split(";")[0] || undefined;
+      // Created here, not at module load, so prerendering the page at build time never needs Supabase config.
+      // The browser only uploads through one-time signed URLs issued by the server, so the public key needs no bucket access.
+      const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
       const { error } = await supabase.storage
         .from("Recordings")
         .uploadToSignedUrl(target.path, target.uploadToken, clip.blob, { contentType });
